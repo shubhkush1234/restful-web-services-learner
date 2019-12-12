@@ -29,5 +29,66 @@ public class HelloWorldController {
 }
 ==================================================
 
-Spring provides another annotation:"@GetMapping" for GET and similarly for POST its "@PostMapping" and so on. So now no need to specify method=RequestMethod.GET now. 
- 
+Spring provides another annotation:"@GetMapping" for GET and similarly for POST its "@PostMapping" and so on. So now no need to specify method=RequestMethod.GET now.
+=======================================
+//Controller
+@RestController
+public class HelloWorldController {
+
+	//GET
+	// URI- /hello-world
+	//Method- "helloWorld"
+	@GetMapping( path = "/hello-world" )
+	public String helloWorld(){
+		return "Hello World, I am created by Shubham!!";
+	}
+}
+======================================= 
+Enhancing the HellowWorldController
+:::::::::::::::::::::::::::::::::::
+In the previous step, we returned a hard-coded String. We made get request. We mapped GET request to the URI to the method which returned a hardcoded string.
+
+In this step, Now, we'll create an object of the HelloWorld bean and try to return it back and see what happens.
+
+!!A LOT OF MAGIC IS HAPPENING IN THE BACKGROUND!!
+
+Now what I want to do is to create a GET mapping to "/helloWorldBean" and thisi time I want to create a bean and return it back.
+
+======================================================
+@GetMapping( path = "/hello-world-bean" )
+	public HelloWorldBean helloWorldBean(){
+		return new HelloWorldBean(" Hello Shubham ");
+	}
+
+======================================================
+So, instead of returning a String, now it's returning a helloWorldBean. Lets create that bean too and generate Getters, Setters and toString for this:
+======================================================
+package com.shubham.rest.webservices.restfulwebservices;
+
+public class HelloWorldBean {
+	
+	private String message;
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	@Override
+	public String toString() {
+		return "HelloWorldBean [message=" + message + "]";
+	}
+
+	public HelloWorldBean(String message){
+		this.message = message;
+	}
+	
+}
+=============================================
+Now when we'll hit: http://localhost:8080/hello-world-bean in the browser, well get:
+===================================
+{"message":" Hello Shubham "}
+===================================
